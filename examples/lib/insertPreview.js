@@ -43,9 +43,16 @@ function updatePreviews(src, selector) {
       'noUI': true
     }
   };
+  
+  var sequencer = ImageSequencer();
 
-  Object.keys(previewSequencerSteps).forEach(function (step, index) {
-    generatePreview(step, Object.values(previewSequencerSteps)[index], src, selector);
+  sequencer.loadImage(src, function(){
+    this.addSteps('resize', {['resize']: '30%'});
+    this.run((src)=>{
+      Object.keys(previewSequencerSteps).forEach(function (step, index) {
+        generatePreview(step, Object.values(previewSequencerSteps)[index], src, selector);
+      });
+    });
   });
 }
 
